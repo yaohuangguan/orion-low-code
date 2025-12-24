@@ -185,7 +185,7 @@ export const DataList: React.FC<DataListProps> = (props) => {
       <div className="divide-y divide-slate-100 min-h-[50px]">
         {processedItems.length === 0 ? (
           <div className="p-6 text-center text-slate-400 text-xs italic">
-            {items.length === 0 ? "List is empty. Use Orion AI to fill data." : "No items match your filter."}
+            {items.length === 0 ? "List is empty." : "No items match your filter."}
           </div>
         ) : (
           processedItems.map((item) => (

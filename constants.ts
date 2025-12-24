@@ -77,7 +77,7 @@ export const INITIAL_SCHEMA: SchemaNode = {
               type: 'DataList',
               props: {
                 title: 'Analytics Data',
-                description: 'Use Orion AI to generate items',
+                description: 'Configure items manually',
                 items: [
                   { id: '1', title: 'Phase 1', subtitle: 'Initial setup', value: '100%', badge: 'Done' },
                   { id: '2', title: 'Phase 2', subtitle: 'Implementation', value: '45%', badge: 'In Progress' }
@@ -112,7 +112,7 @@ export const TEMPLATES: Template[] = [
       props: { className: 'text-center py-16 px-4 bg-slate-900 rounded-3xl text-white space-y-6' },
       children: [
         { id: 'h-title', type: 'Text', props: { content: 'Build with Orion', className: 'text-4xl font-extrabold tracking-tight' } },
-        { id: 'h-sub', type: 'Text', props: { content: 'Drag, drop, and let AI fill the data.', className: 'text-slate-400 max-w-lg mx-auto' } },
+        { id: 'h-sub', type: 'Text', props: { content: 'Drag, drop, and build rapidly.', className: 'text-slate-400 max-w-lg mx-auto' } },
         { id: 'h-actions', type: 'Container', props: { className: 'flex justify-center gap-4 pt-4' }, children: [
           { id: 'h-btn1', type: 'Button', props: { label: 'Get Started', variant: 'primary' } },
           { id: 'h-btn2', type: 'Button', props: { label: 'View Demo', variant: 'outline', className: 'bg-transparent text-white border-slate-700' } }

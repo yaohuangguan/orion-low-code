@@ -13,7 +13,6 @@ import {
 import { INITIAL_SCHEMA, TEMPLATES } from './constants';
 import { Renderer } from './components/Renderer';
 import { SchemaNode, DataListItem, User, SavedProject, ComponentType, Template, LogicAction } from './types';
-import { generateMockData } from './services/geminiService';
 import { generateReactCode, generateVueCode } from './services/codeGenerator';
 import { collabService } from './services/collaboration';
 import { authService, storageService } from './services/authStorage';
@@ -94,10 +93,6 @@ export default function App() {
     localStorage.setItem('orion_runtime_state', JSON.stringify(runtimeState));
   }, [runtimeState]);
   
-  // --- AI State ---
-  const [aiPrompt, setAiPrompt] = useState('');
-  const [isAiThinking, setIsAiThinking] = useState(false);
-
   // --- Helpers ---
   const t = (key: keyof typeof translations['en']) => translations[lang][key];
 
@@ -272,21 +267,6 @@ export default function App() {
   const handleCreateVariable = (name: string) => {
     if (!name || runtimeState[name] !== undefined) return;
     setRuntimeState(prev => ({ ...prev, [name]: '' }));
-  };
-
-  // --- AI ---
-  const handleAiGenerate = async () => {
-    if (!selectedId || !aiPrompt) return;
-    setIsAiThinking(true);
-    try {
-      const data = await generateMockData(aiPrompt);
-      handlePropChange('items', data);
-      setAiPrompt('');
-    } catch (e) {
-      alert(t('aiFailed'));
-    } finally {
-      setIsAiThinking(false);
-    }
   };
 
   const handleCopyCode = () => {
@@ -593,20 +573,6 @@ export default function App() {
                             <label className="text-[10px] font-medium text-slate-500 mb-1 block">{t('content')}</label>
                             <textarea className="w-full text-xs p-2 border rounded" rows={3} value={selectedNode.props.content || ''} onChange={(e) => handlePropChange('content', e.target.value)} />
                          </div>
-                      )}
-                      
-                      {/* AI Data Filler (DataList) */}
-                      {selectedNode.type === 'DataList' && (
-                        <div className="mt-4 p-3 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
-                           <div className="flex items-center gap-2 mb-2">
-                             <Sparkles className="w-3 h-3 text-indigo-600" />
-                             <span className="text-xs font-bold text-indigo-900">{t('aiDataFiller')}</span>
-                           </div>
-                           <textarea className="w-full text-xs p-2 border border-indigo-200 rounded bg-white text-slate-900 focus:bg-white outline-none resize-none mb-2" rows={2} placeholder="e.g. 5 Tech Stocks..." value={aiPrompt} onChange={(e) => setAiPrompt(e.target.value)} />
-                           <button onClick={handleAiGenerate} disabled={isAiThinking || !aiPrompt} className="w-full py-1.5 bg-indigo-600 text-white text-xs rounded font-medium hover:bg-indigo-700 flex items-center justify-center gap-1">
-                             {isAiThinking ? <Loader2 className="w-3 h-3 animate-spin"/> : t('generateData')}
-                           </button>
-                        </div>
                       )}
                    </div>
                  </>
